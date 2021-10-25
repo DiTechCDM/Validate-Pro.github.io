@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+
+    <link rel="stylesheet" href="./Assets/CSS/style.css">
+</head>
+
+<body style="background-color: #F6E9CA;background-image: url('./Assets/Img/texture.png');width: 100%;height: 100%;">
+    <div class="quizArea">
+        <h1 class="ml6 mc_quiz" id="HideDive1" style="display: block;">
+            <span class="text-wrapper">
+                <span class="letters">MultiChoice Questions</span>
+            </span>
+        </h1>
+        <section id="boy-animate" style="display: block;">
+            <div class="row-sm-2">
+                <div class="col-sm-2 absolute">
+                    <img src="./Assets/Img/Boy-animate.png" id="boy-img" alt="">
+                    <div class="multipleChoiceQues">
+                        <div class="my-progress">
+                            <progress class="my-progress-bar" min="0" max="100" value="0" step="9"
+                                aria-labelledby="my-progress-completion"></progress>
+                            <p id="my-progress-completion" class="js-my-progress-completion sr-only" aria-live="polite">
+                                0%
+                                complete
+                            </p>
+                        </div>
+                        <div class="quizBox">
+                            <div class="question"> </div>
+                            <div class="answerOptions"></div>
+                            <div class="buttonArea">
+                                <!-- xxxxxxxxxxxxxxxxxxx -->
+                                <button onclick="check()" class="noselect">Next</button>
+                                <button id="next" onclick="play()" class="noselect hidden">Next</button>
+                                <!-- xxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                                <audio id="audio" src="./Assets/audio/Copines - Baby Voice.mp3"></audio>
+                                <button id="submit" onclick="hide()" class="hidden submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="particles-js" style="position: absolute;"></div>
+                </div>
+                <div class="col-sm-2">
+                    <div id="show" style="width:100%;height:0;padding-bottom:100%;position:relative;margin: auto;">
+                        <video width="500" height="500" id="video-correct" style="display: none;" autoplay loop muted>
+                            <source src="./Assets/Correct.mp4" type="video/mp4" />
+                        </video>
+                        <audio id="audio1" src="./Assets/audio/Correct Answer.mp3"></audio>
+                        <audio id="audio2" src="./Assets/audio/Wrong Answer.mp3"></audio>
+                        <!-- Incorrect video -->
+                        <video width="500" height="500" id="video-incorrect" style="display: none;" autoplay loop muted>
+                            <source src="./Assets/Incorrect-video.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                    <!-- <figure class="swing" id="no" style="display: block;">
+                        <img src="https://eldon.qodeinteractive.com/wp-content/uploads/2021/05/coming-soon-img-1.png"
+                            id="img-animation" width="">
+                    </figure> -->
+                </div>
+            </div>
+        </section>
+        <div class="resultArea">
+            <div style="display: flex;justify-content: center;">
+                <div class="FireWork" style="position: absolute;"><img src="./Assets/Img/7fa635fc7a0caad3-.gif" alt="">
+                </div>
+            </div>
+            <audio src="./Assets/audio/Fireworks New Year.mp3" id="firework"></audio>
+            <div class="resultPage1">
+                <div class="resultBox">
+                    <h1>Your ScoreBoard</h1>
+                </div>
+                <div class="briefchart">
+                    <div id="_cir_progress" class="emojis__row">
+                        <div class="emojis__scoreboard">
+                            <p style="color: green;" class="_text_cor"></p> <span><img src="./Assets/Img/Correct.gif"
+                                    style="width: 10%;" alt=""></span>
+                        </div>
+                        <div class="emojis__scoreboard">
+                            <p style="color: red;" class="_text_incor"></p> <span><img style="width: 10%;"
+                                    src="./Assets/Img/Incorrect.gif" alt=""></span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="resultBtns">
+                    <button class="viewanswer">Answers</button>
+                    <button class="replay"><span>Replay</span></button>
+                </div>
+            </div>
+
+            <div class="resultPage2">
+                <h1>Your Result</h1>
+                <div class="chartBox">
+                    <canvas id="myChart" width="400" height="400"></canvas>
+                </div>
+                <button class="backBtn">Back</button>
+            </div>
+
+            <div class="resultPage3">
+                <h1>Your Answers</h1>
+                <div class="allAnswerBox">
+
+                </div>
+                <button class="backBtn">Back</button>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./Assets/JS/particles.min.js"></script>
+    <script src="./Assets/JS/app.js"></script>
+    <script src="./Assets/JS/index.js"></script>
+    <script src="./Assets/JS/text-animation.js"></script>
+
+
+    <script>
+        function play() {
+            // var audio = document.getElementById("audio");
+            var button = document.getElementById('next');
+            var no = document.getElementById('no');
+            // audio.play();
+            var x = document.getElementById('show');
+            if ((x.style.display === 'none') || (no.style.display === "block")) {
+                x.style.display = 'block';
+                no.style.display = 'none';
+                setTimeout(function () {
+                    $('#show').fadeOut('fast');
+                }, 2500); // <-- time in milliseconds
+                setTimeout(function () {
+                    $('#no').show();
+                }, 2500); // <-- time in milliseconds
+            }
+            else {
+                x.style.display = 'none';
+                no.style.display = 'block';
+            }
+        }
+    </script>
+
+    <script src="./Assets/JS/jquery.fireworks.js"></script>
+
+    <script>
+        function hide() {
+            var a = document.getElementById("audio1");
+            a.pause();
+            var b = document.getElementById("audio2");
+            b.pause();
+            var hideDiv = document.getElementById('boy-animate');
+            var hideDiv1 = document.getElementById('HideDive1');
+            var firwork = document.getElementById('firework');
+            var none = document.getElementById('none');
+            firwork.play();
+            if ((hideDiv.style.display === "block") || (hideDiv1.style.display === 'block') || (none.style.display === 'block')) {
+                hideDiv.style.display = "none";
+                hideDiv1.style.display = "none";
+                none.style.display = "none";
+            }
+            else {
+                hideDiv.style.display = "block";
+                hideDiv1.style.display = "block";
+                none.style.display = "block";
+            }
+        }
+
+    </script>
+
+    <div class="grass" style="display: block;" id="none">
+        <img src="./Assets/Img/grass.png" alt="">
+    </div>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        function check() {
+            var selectedAns = ["rd_0", "rd_1", "rd_2", "rd_3"];
+
+
+            // Query each group for a checked radio button:
+            var selRadio = document.querySelector("input[name=optRdBtn]:checked");
+            // var colorRadio = document.querySelector("input[name=colour]:checked");
+
+            // If each variable holds a valid reference to an element, 
+            // then a pet and a color were chosen/
+            if (selRadio) {
+                // A string holding a number can be converted quickly to a number by 
+                // prepending a plus sign in front of it. For multiplication, just use *
+                // as the operator insteach of + (the one in the middle)
+                alert("You have selected a " + selRadio.value);
+            } else {
+                // Otherwise, one or both were not chosen
+                swal({
+                    title: "Oops you have not selected any answer",
+                    icon: "error",
+                });
+            }
+        }
+    </script>
+
+
+
+</body>
+
+</html>
